@@ -111,13 +111,16 @@ proj=$(basename $(realpath $scriptDir/..))
 #@ Core
 if [[ $utest == 0 ]]; then
     if [[ -d "$binarypath" ]]; then
-        ln -sf $scriptDir/../bin/jsync $binarypath
+        cd $binarypath
+        ln -sf $scriptDir/../bin/* .
         success "Succeed to link binaries in $binarypath"
         exit 0
     fi
 
-    mkdir -p $scriptDir/export/bin
-    ln -sf $scriptDir/../bin/jsync $scriptDir/export/bin
+    mkdir -p $scriptDir/export/bin && cd $_
+    ln -sf $scriptDir/../bin/* .
+    cd $scriptDir
+
     text_setenv="# >>>>>>>>>>>>>>>>>>>>>>>>>>> [$proj]
 export PATH=${scriptDir}/export/bin:\$PATH
 
