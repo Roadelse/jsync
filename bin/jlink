@@ -49,8 +49,7 @@ link_files_recursively() {
             elif [ -d "$file" ]; then
                 link_files_recursively "$file" "$dstT/${file##*/}"
             else
-                echo "Unreachable for $file"
-                exit 101
+                echo "Invalid $file"
             fi
         done
     else
