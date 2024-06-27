@@ -33,7 +33,8 @@ done
 if [[ -z "$@" ]]; then
     if [[ -e $tarDir/$configFile ]]; then
         echo "configFile : $tarDir/$configFile"
-        cat $tarDir/$configFile
+        echo "------------------------------"
+        cat $tarDir/$configFile | grep -P '\w+ \w+:'
     else
         echo "Not within a jsync project path, exit"
     fi
@@ -101,6 +102,10 @@ if [[ $unittest == "0" ]]; then #>- not in unittest mode
     # >>>>>>>>>>>>>>>>> Confirm mode & target <<<<<<<<<<<<<<<<<
     addr=
     while read line; do
+        if [[ -z $(echo $line) || "$line" =~ ^# ]]; then
+            continue
+        fi
+
         eList=($line)
         # ================== use 1st target if not specified
         if [[ $target == default ]]; then
